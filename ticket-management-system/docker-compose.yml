@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: ticket_db
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysql-data:/var/lib/mysql
+
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://database:3306/ticket_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=password
+    depends_on:
+      - database
+
+volumes:
+  mysql-data:
