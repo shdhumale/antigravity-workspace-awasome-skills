@@ -28,9 +28,15 @@ public class TicketService {
     public Ticket updateTicket(Long id, Ticket ticketDetails) {
         Ticket ticket = ticketRepository.findById(id).orElse(null);
         if (ticket != null) {
-            ticket.setName(ticketDetails.getName());
-            ticket.setDescription(ticketDetails.getDescription());
-            ticket.setStatus(ticketDetails.getStatus());
+            if (ticketDetails.getName() != null) {
+                ticket.setName(ticketDetails.getName());
+            }
+            if (ticketDetails.getDescription() != null) {
+                ticket.setDescription(ticketDetails.getDescription());
+            }
+            if (ticketDetails.getStatus() != null) {
+                ticket.setStatus(ticketDetails.getStatus());
+            }
             return ticketRepository.save(ticket);
         }
         return null;

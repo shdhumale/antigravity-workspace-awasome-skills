@@ -35,8 +35,22 @@ public class TicketController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Ticket> updateTicket(@PathVariable Long id, @Valid @RequestBody Ticket ticketDetails) {
-        Ticket updatedTicket = ticketService.updateTicket(id, ticketDetails);
+    public ResponseEntity<Ticket> updateTicket(
+            @PathVariable Long id,
+            @RequestBody(required = false) Ticket ticketDetails,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) String status) {
+
+        Ticket details = ticketDetails != null ? ticketDetails : new Ticket();
+        if (name != null)
+            details.setName(name);
+        if (description != null)
+            details.setDescription(description);
+        if (status != null)
+            details.setStatus(status);
+
+        Ticket updatedTicket = ticketService.updateTicket(id, details);
         return updatedTicket != null ? ResponseEntity.ok(updatedTicket) : ResponseEntity.notFound().build();
     }
 

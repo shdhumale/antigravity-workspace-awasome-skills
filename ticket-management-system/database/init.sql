@@ -1,8 +1,8 @@
 -- MySQL Database Initialization Script
 -- Ticket Management System
 
-CREATE DATABASE IF NOT EXISTS ticket_db;
-USE ticket_db;
+CREATE DATABASE IF NOT EXISTS as_ticket_db;
+USE as_ticket_db;
 
 -- Drop table if it exists
 DROP TABLE IF EXISTS tickets;
